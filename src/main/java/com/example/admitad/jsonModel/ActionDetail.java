@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Builder
@@ -13,7 +15,7 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ActionDetail {
     @JsonProperty("tariffs")
-    private Tariff[] tariffs;
+    private List<Tariff> tariffs;
 
     @JsonProperty("type")
     private String type;
