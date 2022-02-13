@@ -33,7 +33,6 @@ public class DataService {
                             String asString = objectMapper.writeValueAsString(advertisementProgram);
 
                             log.info(asString);
-
                         } catch (JsonProcessingException | JSONException ex) {
                             ex.printStackTrace();
                         }
