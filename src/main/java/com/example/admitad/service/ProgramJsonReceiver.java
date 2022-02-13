@@ -30,10 +30,7 @@ public class ProgramJsonReceiver {
         JSONObject jsonObject;
 
         try {
-            WebClient.ResponseSpec retrieve = dataClient.get().uri(admitadDataUrl)
-                    .header("Authorization", "Bearer " + authToken)
-                    .header("Cookie", "gdpr_country=0; section=webmaster")
-                    .retrieve();
+            WebClient.ResponseSpec retrieve = dataClient.get().uri(admitadDataUrl).header("Authorization", "Bearer " + authToken).header("Cookie", "gdpr_country=0; section=webmaster").retrieve();
 
             Mono<String> mono = retrieve.bodyToMono(String.class);
             jsonStr = mono.block();

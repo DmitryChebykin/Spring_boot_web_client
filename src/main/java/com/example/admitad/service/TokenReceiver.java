@@ -45,11 +45,7 @@ public class TokenReceiver {
         String jsonStr;
 
         try {
-            WebClient.ResponseSpec retrieve = tokenClient.post().uri(admitadTokenUrl)
-                    .header("Authorization", "Basic " + basicAuthKey)
-                    .header("Content-Type", "application/x-www-form-urlencoded")
-                    .header("Cookie", "gdpr_country=0; section=webmaster; gdpr_country=0; section=webmaster; gdpr_country=0; section=webmaster")
-                    .body(BodyInserters.fromFormData(formData)).retrieve();
+            WebClient.ResponseSpec retrieve = tokenClient.post().uri(admitadTokenUrl).header("Authorization", "Basic " + basicAuthKey).header("Content-Type", "application/x-www-form-urlencoded").header("Cookie", "gdpr_country=0; section=webmaster; gdpr_country=0; section=webmaster; gdpr_country=0; section=webmaster").body(BodyInserters.fromFormData(formData)).retrieve();
 
             Mono<String> mono = retrieve.bodyToMono(String.class);
             jsonStr = mono.block();
@@ -66,11 +62,7 @@ public class TokenReceiver {
         TokenData tokenData = TokenData.builder().build();
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);
-            tokenData = TokenData.builder()
-                    .authToken((String) jsonObject.get(ACCESS_TOKEN))
-                    .refreshToken((String) jsonObject.get(REFRESH_TOKEN))
-                    .expiresIn((Integer) jsonObject.get(EXPIRES_IN))
-                    .build();
+            tokenData = TokenData.builder().authToken((String) jsonObject.get(ACCESS_TOKEN)).refreshToken((String) jsonObject.get(REFRESH_TOKEN)).expiresIn((Integer) jsonObject.get(EXPIRES_IN)).build();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -91,10 +83,7 @@ public class TokenReceiver {
     public TokenData refreshTokenData(String refreshToken) {
         MultiValueMap<String, String> formData = getActualAuthTokenMap(refreshToken);
 
-        WebClient.ResponseSpec retrieve = tokenClient.post()
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .header("Cookie", "gdpr_country=0; section=webmaster")
-                .body(BodyInserters.fromFormData(formData)).retrieve();
+        WebClient.ResponseSpec retrieve = tokenClient.post().header("Content-Type", "application/x-www-form-urlencoded").header("Cookie", "gdpr_country=0; section=webmaster").body(BodyInserters.fromFormData(formData)).retrieve();
 
         Mono<String> mono = retrieve.bodyToMono(String.class);
         String jsonStr = mono.block();

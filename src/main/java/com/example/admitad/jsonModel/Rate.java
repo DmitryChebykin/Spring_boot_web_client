@@ -12,7 +12,6 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rate {
     @JsonProperty("price_s")
-
     private String priceS;
 
     private String size;

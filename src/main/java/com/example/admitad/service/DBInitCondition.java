@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 public class DBInitCondition implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        ApplicationArguments applicationArguments = Objects.requireNonNull(context.getBeanFactory())
-                .getBean(ApplicationArguments.class);
+        ApplicationArguments applicationArguments = Objects.requireNonNull(context.getBeanFactory()).getBean(ApplicationArguments.class);
 
         String[] sourceArgs = applicationArguments.getSourceArgs();
         List<String> stringList = Arrays.stream(sourceArgs).collect(Collectors.toList());
