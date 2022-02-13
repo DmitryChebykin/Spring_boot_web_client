@@ -1,6 +1,6 @@
 package com.example.admitad.service;
 
-import com.example.admitad.model.TokenData;
+import com.example.admitad.tokenModel.TokenData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +36,9 @@ public class TokenReceiver {
 
     @Value("${basicAuthKey}")
     private String basicAuthKey;
+
+    @Value("${clientSecret}")
+    private String clientSecret;
 
     public TokenData getTokenData() {
         MultiValueMap<String, String> formData = getNewRefreshTokenMap();
@@ -103,7 +106,7 @@ public class TokenReceiver {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("grant_type", REFRESH_TOKEN);
         formData.add("client_id", clientId);
-        formData.add("client_secret", "7kn1YJbSqk5xvr78LnB6KkUb0o3sjA");
+        formData.add("client_secret", clientSecret);
         formData.add(REFRESH_TOKEN, refreshToken);
         return formData;
     }

@@ -1,10 +1,11 @@
 package com.example.admitad.service.scheduler;
 
-import com.example.admitad.model.TokenData;
 import com.example.admitad.service.TokenReceiver;
+import com.example.admitad.tokenModel.TokenData;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.stereotype.Service;
@@ -31,37 +32,40 @@ public class ActualTokenKeeper implements SchedulingConfigurer {
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.addTriggerTask(() -> {
-                    if (tokenData == null || tokenData.getRefreshToken() == null) {
-                        tokenData = tokenReceiver.getTokenData();
-                    } else {
-                        String refreshToken = tokenData.getRefreshToken();
-                        tokenData = tokenReceiver.refreshTokenData(refreshToken);
-                    }
-                    log.info(String.valueOf(tokenData));
-                },
-                triggerContext -> {
-                    Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
-                    Calendar nextExecutionTime = Calendar.getInstance();
+        taskRegistrar.addTriggerTask(this::setTokenData,
+                this::getNextDate);
+    }
 
-                    if (lastActualExecutionTime == null) {
-                        nextExecutionTime.setTime(new Date());
-                    } else {
-                        nextExecutionTime.setTime(lastActualExecutionTime);
-                    }
+    private Date getNextDate(TriggerContext triggerContext) {
+        Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
+        Calendar nextExecutionTime = Calendar.getInstance();
 
-                    Integer expiresIn = tokenData.getExpiresIn();
+        if (lastActualExecutionTime == null) {
+            nextExecutionTime.setTime(new Date());
+        } else {
+            nextExecutionTime.setTime(lastActualExecutionTime);
+        }
 
-                    if (expiresIn == null) {
-                        expiresIn = 0;
-                    }
+        Integer expiresIn = tokenData.getExpiresIn();
 
-                    int seconds = expiresIn - SECOND_BEFORE_EXPIRES;
-                    nextExecutionTime.add(Calendar.SECOND, tokenData == null
-                            ? MINIMUM_SECOND_TIMEOUT
-                            : Math.max(MINIMUM_SECOND_TIMEOUT, seconds));
+        if (expiresIn == null) {
+            expiresIn = 0;
+        }
 
-                    return nextExecutionTime.getTime();
-                });
+        int seconds = expiresIn - SECOND_BEFORE_EXPIRES;
+
+        nextExecutionTime.add(Calendar.SECOND, Math.max(MINIMUM_SECOND_TIMEOUT, seconds));
+
+        return nextExecutionTime.getTime();
+    }
+
+    private void setTokenData() {
+        if (tokenData == null || tokenData.getRefreshToken() == null) {
+            tokenData = tokenReceiver.getTokenData();
+        } else {
+            String refreshToken = tokenData.getRefreshToken();
+            tokenData = tokenReceiver.refreshTokenData(refreshToken);
+        }
+        log.info(String.valueOf(tokenData));
     }
 }

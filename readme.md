@@ -6,7 +6,7 @@
 
 Подробнее о сервисе - https://developers.admitad.com/ru/doc/webmaster-api/
 
-Реквизиты доступа передаются посредством передачи в header basicAuthKey (строка в Base64) - используется один раз при
+Реквизиты доступа передаются посредством передачи в header basicAuthKey и client_secret (строки в Base64) - используется один раз при
 получении первой пары токенов.
 
 После авторизации на **Admitad** получаем два токена - auth и refresh. Для токена получаем время его жизни в секундах.
@@ -20,10 +20,12 @@ Admitad отдает некий json, содержащий нужные данн
 Получение json из сервиса и обновление БД необходимо сделать по расписанию.
 
 Реквизиты доступа к Admitad необходимо разместить в файле account.properties (в папке resources рядом с
-application.properties). Эти реквизиты доступны в личном кабинете сервиса **Admitad**:
+application.properties). Эти реквизиты доступны в личном кабинете сервиса **Admitad** (ниже образец заполнения):
 
 ```
 basicAuthKey=2wew44sdsASCFR
 
 clientId=wew44sdsASCFR
+
+clientSecret=7kn
 ```

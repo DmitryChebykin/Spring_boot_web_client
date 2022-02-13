@@ -1,4 +1,4 @@
-package com.example.admitad.model;
+package com.example.admitad.tokenModel;
 
 import lombok.Builder;
 import lombok.Getter;
