@@ -23,7 +23,9 @@ import java.util.Date;
 @PropertySource("classpath:account.properties")
 public class TokenReceiver {
     public static final String ACCESS_TOKEN = "access_token";
+
     public static final String REFRESH_TOKEN = "refresh_token";
+
     public static final String EXPIRES_IN = "expires_in";
 
     private final WebClient tokenClient;

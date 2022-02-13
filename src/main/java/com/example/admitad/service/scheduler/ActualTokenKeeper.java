@@ -19,7 +19,9 @@ import java.util.Date;
 @Slf4j
 public class ActualTokenKeeper implements SchedulingConfigurer {
     public static final int MINIMUM_SECOND_TIMEOUT = 5;
+
     public static final int SECOND_BEFORE_EXPIRES = 10;
+
     private final TokenReceiver tokenReceiver;
 
     @Getter
@@ -32,8 +34,7 @@ public class ActualTokenKeeper implements SchedulingConfigurer {
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.addTriggerTask(this::setTokenData,
-                this::getNextDate);
+        taskRegistrar.addTriggerTask(this::setTokenData, this::getNextDate);
     }
 
     private Date getNextDate(TriggerContext triggerContext) {

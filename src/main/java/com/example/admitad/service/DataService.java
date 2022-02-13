@@ -23,21 +23,20 @@ public class DataService {
             JSONArray results = jsonObject.getJSONArray("results");
 
             IntStream.range(0, results.length()).forEach(e -> {
-                        try {
-                            String content = results.get(e).toString();
+                try {
+                    String content = results.get(e).toString();
 
-                            AdvertisementProgram advertisementProgram = objectMapper.readValue(content, AdvertisementProgram.class);
+                    AdvertisementProgram advertisementProgram = objectMapper.readValue(content, AdvertisementProgram.class);
 
-                            log.info(advertisementProgram.toString());
+                    log.info(advertisementProgram.toString());
 
-                            String asString = objectMapper.writeValueAsString(advertisementProgram);
+                    String asString = objectMapper.writeValueAsString(advertisementProgram);
 
-                            log.info(asString);
-                        } catch (JsonProcessingException | JSONException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-            );
+                    log.info(asString);
+                } catch (JsonProcessingException | JSONException ex) {
+                    ex.printStackTrace();
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
