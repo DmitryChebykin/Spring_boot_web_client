@@ -29,6 +29,11 @@ public class DataService {
                             AdvertisementProgram advertisementProgram = objectMapper.readValue(content, AdvertisementProgram.class);
 
                             log.info(advertisementProgram.toString());
+
+                            String asString = objectMapper.writeValueAsString(advertisementProgram);
+
+                            log.info(asString);
+
                         } catch (JsonProcessingException | JSONException ex) {
                             ex.printStackTrace();
                         }
