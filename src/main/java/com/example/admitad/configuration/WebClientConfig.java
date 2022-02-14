@@ -31,7 +31,9 @@ public class WebClientConfig {
     private WebClient getWebClient() {
         HttpClient httpClient = getHttpClient();
 
-        WebClient webClient = WebClient.builder().defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).clientConnector(new ReactorClientHttpConnector(httpClient)).build();
+        WebClient webClient = WebClient.builder().
+                defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .clientConnector(new ReactorClientHttpConnector(httpClient)).build();
 
         log.info(webClient.toString());
 
@@ -45,6 +47,9 @@ public class WebClientConfig {
     }
 
     private HttpClient getHttpClient() {
-        return HttpClient.create().option(ChannelOption.CONNECT_TIMEOUT_MILLIS, TIMEOUT).responseTimeout(Duration.ofMillis(5000)).doOnConnected(conn -> conn.addHandlerLast(new ReadTimeoutHandler(TIMEOUT, TimeUnit.MILLISECONDS)).addHandlerLast(new WriteTimeoutHandler(TIMEOUT, TimeUnit.MILLISECONDS)));
+        return HttpClient.create().option(ChannelOption.CONNECT_TIMEOUT_MILLIS, TIMEOUT)
+                .responseTimeout(Duration.ofMillis(5000))
+                .doOnConnected(conn -> conn.addHandlerLast(new ReadTimeoutHandler(TIMEOUT, TimeUnit.MILLISECONDS))
+                        .addHandlerLast(new WriteTimeoutHandler(TIMEOUT, TimeUnit.MILLISECONDS)));
     }
 }
