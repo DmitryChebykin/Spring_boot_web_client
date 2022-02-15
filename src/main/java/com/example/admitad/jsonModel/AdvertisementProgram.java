@@ -1,5 +1,6 @@
 package com.example.admitad.jsonModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -22,7 +23,8 @@ public class AdvertisementProgram {
     @JsonProperty("image")
     private String imageUri;
 
-    private byte[] imageBytes;
+    @JsonIgnore
+    private byte[] image;
 
     @JsonProperty("products_xml_link")
     private String productXmlLink;

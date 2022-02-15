@@ -1,5 +1,7 @@
 package com.example.admitad.service;
 
+import com.example.admitad.myBatisPlus.Program;
+import com.example.admitad.myBatisPlus.ProgramService;
 import com.example.admitad.jsonModel.AdvertisementProgram;
 import com.example.admitad.repository.ActionsDetailRepository;
 import com.example.admitad.repository.CategoryRepository;
@@ -8,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Service
@@ -25,6 +29,7 @@ public class DataService {
     private final ProgramRepository programRepository;
     private final ActionsDetailRepository actionsDetailRepository;
     private final WebClient dataClient;
+    private final ProgramService programService;
 
     @Transactional
     public void saveJsonToDB(JSONObject jsonObject) {
@@ -41,6 +46,13 @@ public class DataService {
                     String content = results.get(e).toString();
 
                     AdvertisementProgram advertisementProgram = objectMapper.readValue(content, AdvertisementProgram.class);
+
+                    Program target = new Program();
+                    BeanUtils.copyProperties(advertisementProgram, target);
+
+                    programService.insertOrUpdate(target);
+                    List<Program> list = programService.list();
+
 
                     log.info(advertisementProgram.toString());
 
@@ -62,10 +74,10 @@ public class DataService {
     private void saveOrUpdateProgram(AdvertisementProgram advertisementProgram) {
         String imageUri = advertisementProgram.getImageUri();
 
-        if(imageUri != null){
+        if (imageUri != null) {
             WebClient.ResponseSpec retrieve = dataClient.get().uri(imageUri).retrieve();
             byte[] imageByte = retrieve.bodyToMono(byte[].class).block();
-            advertisementProgram.setImageBytes(imageByte);
+            advertisementProgram.setImage(imageByte);
         }
 
         log.info("save program");

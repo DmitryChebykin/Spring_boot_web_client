@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.retry.annotation.EnableRetry;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.example.admitad.repository")
+@MapperScan(basePackages = {"com.example.admitad.repository", "com.example.admitad.myBatisPlus"})
 @EnableRetry
 public class AdmitadApplication {
 

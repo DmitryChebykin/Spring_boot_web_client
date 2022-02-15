@@ -18,12 +18,12 @@ public interface ProgramRepository extends BaseRepository {
     void dropTableIfExists();
 
     @Insert("INSERT INTO program(name, gotoLink, image_uri, image, products_xml_link, id) " +
-            "VALUES(#{name}, #{gotoLink}, #{imageUri}, #{imageBytes}, #{productXmlLink}, #{id})" +
+            "VALUES(#{name}, #{gotoLink}, #{imageUri}, #{image}, #{productXmlLink}, #{id})" +
             "ON DUPLICATE KEY UPDATE " +
             "name = #{name}, " +
             "gotoLink = #{gotoLink}, " +
             "image_uri = #{imageUri}, " +
-            "image = #{imageBytes}, " +
+            "image = #{image}, " +
             "products_xml_link = #{productXmlLink}")
     void insertOrUpdateItem(AdvertisementProgram advertisementProgram);
 }
