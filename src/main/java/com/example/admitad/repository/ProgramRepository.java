@@ -1,10 +1,12 @@
 package com.example.admitad.repository;
 
+import com.example.admitad.jsonModel.AdvertisementProgram;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
 @Mapper
-public interface ProgramRepository extends BaseRepository{
+public interface ProgramRepository extends BaseRepository {
     default String getName() {
         return "program";
     }
@@ -14,4 +16,14 @@ public interface ProgramRepository extends BaseRepository{
 
     @Update("DROP TABLE IF EXISTS `program`")
     void dropTableIfExists();
+
+    @Insert("INSERT INTO program(name, gotoLink, image_uri, image, products_xml_link, id) " +
+            "VALUES(#{name}, #{gotoLink}, #{imageUri}, #{imageBytes}, #{productXmlLink}, #{id})" +
+            "ON DUPLICATE KEY UPDATE " +
+            "name = #{name}, " +
+            "gotoLink = #{gotoLink}, " +
+            "image_uri = #{imageUri}, " +
+            "image = #{imageBytes}, " +
+            "products_xml_link = #{productXmlLink}")
+    void insertOrUpdateItem(AdvertisementProgram advertisementProgram);
 }

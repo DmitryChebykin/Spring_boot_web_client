@@ -1,5 +1,7 @@
 package com.example.admitad.repository;
 
+import com.example.admitad.jsonModel.Category;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
@@ -15,4 +17,12 @@ public interface CategoryRepository extends BaseRepository{
 
     @Update("DROP TABLE IF EXISTS `categories`")
     void dropTableIfExists();
+
+    @Insert("INSERT INTO categories(language, name, parent_id, id) " +
+            "VALUES(#{language}, #{name}, #{parent.id}, #{id})" +
+            " ON DUPLICATE KEY UPDATE " +
+            "language = #{language}, " +
+            "name = #{name}, " +
+            "parent_id = #{parent.id}")
+    void insertOrUpdateItem(Category category);
 }

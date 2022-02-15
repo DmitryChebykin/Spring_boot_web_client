@@ -22,6 +22,8 @@ public class AdvertisementProgram {
     @JsonProperty("image")
     private String imageUri;
 
+    private byte[] imageBytes;
+
     @JsonProperty("products_xml_link")
     private String productXmlLink;
 
@@ -30,4 +32,7 @@ public class AdvertisementProgram {
 
     @JsonProperty("gotolink")
     private String gotoLink;
+
+    @JsonProperty("id")
+    private Integer id;
 }
