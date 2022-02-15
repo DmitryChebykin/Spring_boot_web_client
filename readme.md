@@ -29,3 +29,6 @@ clientId=wew44sdsASCFR
 
 clientSecret=7kn
 ```
+
+В сервисе в личном кабинете это выглядит так
+![](.readme_images/2024b370.png)
