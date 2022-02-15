@@ -1,5 +1,7 @@
 package com.example.admitad.repository;
 
+import com.example.admitad.jsonModel.ActionDetail;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
@@ -15,4 +17,13 @@ public interface ActionsDetailRepository extends BaseRepository {
 
     @Update("DROP TABLE IF EXISTS `actions_detail`")
     void dropTableIfExists();
+
+    @Insert("INSERT INTO actions_detail(hold_size, name, type, id) " +
+            "VALUES(#{holdSize}, #{name}, #{type}, #{id})" +
+            " ON DUPLICATE KEY UPDATE " +
+            "hold_size = #{holdSize}, " +
+            "name = #{name}, " +
+            "type = #{type}")
+    void insertOrUpdateItem(ActionDetail actionDetail);
+
 }

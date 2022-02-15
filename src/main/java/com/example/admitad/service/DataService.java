@@ -1,6 +1,7 @@
 package com.example.admitad.service;
 
 import com.example.admitad.jsonModel.AdvertisementProgram;
+import com.example.admitad.repository.ActionsDetailRepository;
 import com.example.admitad.repository.CategoryRepository;
 import com.example.admitad.repository.ProgramRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,12 +23,14 @@ import java.util.stream.IntStream;
 public class DataService {
     private final CategoryRepository categoryRepository;
     private final ProgramRepository programRepository;
+    private final ActionsDetailRepository actionsDetailRepository;
     private final WebClient dataClient;
 
     @Transactional
     public void saveJsonToDB(JSONObject jsonObject) {
         log.info("Сохраняю json");
         log.info(jsonObject.toString());
+
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
@@ -41,21 +44,12 @@ public class DataService {
 
                     log.info(advertisementProgram.toString());
 
-                    advertisementProgram.getCategories().forEach(categoryRepository::insertOrUpdateItem);
+                    saveOrUpdateActionsDetailList(advertisementProgram);
 
-                    String imageUri = advertisementProgram.getImageUri();
+                    saveOrUpdateCategoryList(advertisementProgram);
 
-                    if(imageUri != null){
-                        WebClient.ResponseSpec retrieve = dataClient.get().uri(imageUri).retrieve();
-                        byte[] imageByte = retrieve.bodyToMono(byte[].class).block();
-                        advertisementProgram.setImageBytes(imageByte);
-                    }
+                    saveOrUpdateProgram(advertisementProgram);
 
-                    programRepository.insertOrUpdateItem(advertisementProgram);
-
-                    String asString = objectMapper.writeValueAsString(advertisementProgram);
-
-                    log.info(asString);
                 } catch (JsonProcessingException | JSONException ex) {
                     ex.printStackTrace();
                 }
@@ -63,5 +57,31 @@ public class DataService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveOrUpdateProgram(AdvertisementProgram advertisementProgram) {
+        String imageUri = advertisementProgram.getImageUri();
+
+        if(imageUri != null){
+            WebClient.ResponseSpec retrieve = dataClient.get().uri(imageUri).retrieve();
+            byte[] imageByte = retrieve.bodyToMono(byte[].class).block();
+            advertisementProgram.setImageBytes(imageByte);
+        }
+
+        log.info("save program");
+
+        programRepository.insertOrUpdateItem(advertisementProgram);
+    }
+
+    private void saveOrUpdateCategoryList(AdvertisementProgram advertisementProgram) {
+        log.info("save category");
+
+        advertisementProgram.getCategories().forEach(categoryRepository::insertOrUpdateItem);
+    }
+
+    private void saveOrUpdateActionsDetailList(AdvertisementProgram advertisementProgram) {
+        log.info("save actions_detail");
+
+        advertisementProgram.getActionsDetail().forEach(actionsDetailRepository::insertOrUpdateItem);
     }
 }
