@@ -29,7 +29,10 @@ public class DbInitializer {
 
     @PostConstruct
     public void run() {
-        getRepositoryFields().forEach(this::initDB);
+        try{
+        getRepositoryFields().forEach(this::initDB);} catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private <T extends BaseRepository> void initDB(T t) {
