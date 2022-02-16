@@ -1,7 +1,7 @@
 package com.example.admitad.service;
 
-import com.example.admitad.myBatisPlus.Program;
-import com.example.admitad.myBatisPlus.ProgramService;
+import com.example.admitad.myBatisPlus.domain.Program;
+import com.example.admitad.myBatisPlus.service.ProgramService;
 import com.example.admitad.jsonModel.AdvertisementProgram;
 import com.example.admitad.repository.ActionsDetailRepository;
 import com.example.admitad.repository.CategoryRepository;

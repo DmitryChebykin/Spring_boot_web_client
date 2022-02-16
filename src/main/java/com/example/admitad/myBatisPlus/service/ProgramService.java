@@ -1,6 +1,8 @@
-package com.example.admitad.myBatisPlus;
+package com.example.admitad.myBatisPlus.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.admitad.myBatisPlus.ProgramMapper;
+import com.example.admitad.myBatisPlus.domain.Program;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

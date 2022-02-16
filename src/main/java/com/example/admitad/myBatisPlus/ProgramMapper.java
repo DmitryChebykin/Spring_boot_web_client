@@ -1,6 +1,7 @@
 package com.example.admitad.myBatisPlus;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.admitad.myBatisPlus.domain.Program;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
