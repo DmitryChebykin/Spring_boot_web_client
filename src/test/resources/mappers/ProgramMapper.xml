@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.admitad.myBatisPlus.ProgramMapper">
+  <resultMap id="BaseResultMap" type="com.example.admitad.myBatisPlus.domain.Program">
+    <!--@Table `program`-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="image_uri" jdbcType="VARCHAR" property="imageUri" />
+    <result column="image" jdbcType="BLOB" property="image" />
+    <result column="products_xml_link" jdbcType="VARCHAR" property="productsXmlLink" />
+    <result column="gotoLink" jdbcType="VARCHAR" property="gotolink" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, image_uri, image, products_xml_link, gotoLink
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update `program`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="image_uri = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.imageUri,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="image = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.image,jdbcType=BLOB}
+        </foreach>
+      </trim>
+      <trim prefix="products_xml_link = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.productsXmlLink,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="gotoLink = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.gotolink,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update `program`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="image_uri = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.imageUri != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.imageUri,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="image = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.image != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.image,jdbcType=BLOB}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="products_xml_link = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.productsXmlLink != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.productsXmlLink,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="gotoLink = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.gotolink != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.gotolink,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into `program`
+    (`name`, image_uri, image, products_xml_link, gotoLink)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.name,jdbcType=VARCHAR}, #{item.imageUri,jdbcType=VARCHAR}, #{item.image,jdbcType=BLOB}, 
+        #{item.productsXmlLink,jdbcType=VARCHAR}, #{item.gotolink,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.example.admitad.myBatisPlus.domain.Program" useGeneratedKeys="true">
+    insert into program
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      name,
+      image_uri,
+      image,
+      products_xml_link,
+      gotoLink,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{name,jdbcType=VARCHAR},
+      #{imageUri,jdbcType=VARCHAR},
+      #{image,jdbcType=BLOB},
+      #{productsXmlLink,jdbcType=VARCHAR},
+      #{gotolink,jdbcType=VARCHAR},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      name = #{name,jdbcType=VARCHAR},
+      image_uri = #{imageUri,jdbcType=VARCHAR},
+      image = #{image,jdbcType=BLOB},
+      products_xml_link = #{productsXmlLink,jdbcType=VARCHAR},
+      gotoLink = #{gotolink,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.example.admitad.myBatisPlus.domain.Program" useGeneratedKeys="true">
+    insert into `program`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="imageUri != null">
+        image_uri,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="productsXmlLink != null">
+        products_xml_link,
+      </if>
+      <if test="gotolink != null">
+        gotoLink,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUri != null">
+        #{imageUri,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=BLOB},
+      </if>
+      <if test="productsXmlLink != null">
+        #{productsXmlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="gotolink != null">
+        #{gotolink,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUri != null">
+        image_uri = #{imageUri,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=BLOB},
+      </if>
+      <if test="productsXmlLink != null">
+        products_xml_link = #{productsXmlLink,jdbcType=VARCHAR},
+      </if>
+      <if test="gotolink != null">
+        gotoLink = #{gotolink,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

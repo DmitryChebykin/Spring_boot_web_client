@@ -5,18 +5,41 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.test.autoconfigure.MybatisPlusTest;
 import com.example.admitad.myBatisPlus.domain.Program;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.nio.charset.StandardCharsets;
 
 @ExtendWith(SpringExtension.class)
 @MybatisPlusTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Testcontainers
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ProgramMapperTest {
     @Autowired
     private ProgramMapper programMapper;
+
+    @Container
+    private static final MySQLContainer mysql = new MySQLContainer("mysql:latest")
+            .withDatabaseName("test")
+            .withUsername("test")
+            .withPassword("test");
+
+    @BeforeAll
+    private void initDatabaseProperties() {
+        System.setProperty("spring.datasource.url", mysql.getJdbcUrl());
+        System.setProperty("spring.datasource.username", mysql.getUsername());
+        System.setProperty("spring.datasource.password", mysql.getPassword());
+    }
+
 
     @Test
     void whenInsertNewProgram_ThenNonZeroIntReturns() {
@@ -27,7 +50,7 @@ public class ProgramMapperTest {
                 .name("test_name")
                 .productsXmlLink("test_productsXmlLink").build();
 
-        int insertIdx = programMapper.insert(program);
+        int insertIdx = programMapper.insertOrUpdate(program);
 
         Assertions.assertNotEquals(0, insertIdx);
     }
@@ -50,7 +73,7 @@ public class ProgramMapperTest {
                 .name("test_sdsdsname")
                 .productsXmlLink("test_productsdsasdsXmlLink").build();
 
-        programMapper.insert(program2);
+        programMapper.insertOrUpdate(program2);
 
         QueryWrapper<Program> programQueryWrapper = Wrappers.query();
         QueryWrapper<Program> select = programQueryWrapper.select("*");
