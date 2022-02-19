@@ -1,4 +1,4 @@
-Задача — сделать приложение на Spring Boot Framework.
+Задача — сделать приложение на Spring Boot Framework. Для работы с БД использовать MyBatis + MySql.
 
 Исходные данные.
 
