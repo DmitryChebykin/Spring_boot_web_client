@@ -44,7 +44,7 @@ public class ProgramMapperTest {
     @Test
     void whenInsertNewProgram_ThenNonZeroIntReturns() {
         Program program = Program.builder()
-                .gotolink("test_link")
+                .gotoLink("test_link")
                 .image("".getBytes(StandardCharsets.UTF_8))
                 .imageUri("image_link")
                 .name("test_name")
@@ -58,7 +58,7 @@ public class ProgramMapperTest {
     @Test
     void whenInsertTwoProgram_ReturnCountIs_2() {
         Program program1 = Program.builder()
-                .gotolink("test_link")
+                .gotoLink("test_link")
                 .image("".getBytes(StandardCharsets.UTF_8))
                 .imageUri("image_link")
                 .name("test_name")
@@ -67,7 +67,7 @@ public class ProgramMapperTest {
         programMapper.insert(program1);
 
         Program program2 = Program.builder()
-                .gotolink("test_linkasdasds")
+                .gotoLink("test_linkasdasds")
                 .image("sdsda".getBytes(StandardCharsets.UTF_8))
                 .imageUri("image_sdsdsdlink")
                 .name("test_sdsdsname")

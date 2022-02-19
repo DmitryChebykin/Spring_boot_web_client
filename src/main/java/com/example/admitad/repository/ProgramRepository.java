@@ -11,17 +11,17 @@ public interface ProgramRepository extends BaseRepository {
         return "program";
     }
 
-    @Update("CREATE TABLE  IF NOT EXISTS program (id INTEGER PRIMARY KEY AUTO_INCREMENT, " + "name VARCHAR(255) NOT NULL," + "image_uri VARCHAR(255)," + "image BLOB," + "products_xml_link VARCHAR(255)," + "gotoLink VARCHAR(255))")
+    @Update("CREATE TABLE  IF NOT EXISTS program (id INTEGER PRIMARY KEY, " + "name VARCHAR(255) NOT NULL," + "image_uri VARCHAR(255)," + "image BLOB," + "products_xml_link VARCHAR(255)," + "goto_link VARCHAR(255))")
     void createTableIfMissing();
 
     @Update("DROP TABLE IF EXISTS `program`")
     void dropTableIfExists();
 
-    @Insert("INSERT INTO program(name, gotoLink, image_uri, image, products_xml_link, id) " +
+    @Insert("INSERT INTO program(name, goto_link, image_uri, image, products_xml_link, id) " +
             "VALUES(#{name}, #{gotoLink}, #{imageUri}, #{image}, #{productXmlLink}, #{id})" +
             "ON DUPLICATE KEY UPDATE " +
             "name = #{name}, " +
-            "gotoLink = #{gotoLink}, " +
+            "goto_link = #{gotoLink}, " +
             "image_uri = #{imageUri}, " +
             "image = #{image}, " +
             "products_xml_link = #{productXmlLink}")

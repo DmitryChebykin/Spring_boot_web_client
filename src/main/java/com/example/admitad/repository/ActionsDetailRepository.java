@@ -1,6 +1,6 @@
 package com.example.admitad.repository;
 
-import com.example.admitad.jsonModel.ActionDetail;
+import com.example.admitad.jsonModel.JsonActionDetail;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
@@ -12,7 +12,7 @@ public interface ActionsDetailRepository extends BaseRepository {
         return "actions_detail";
     }
 
-    @Update("CREATE TABLE actions_detail (id INTEGER PRIMARY KEY AUTO_INCREMENT," + "name VARCHAR(255) NOT NULL," + "type VARCHAR(255) NOT NULL," + "hold_size INTEGER)")
+    @Update("CREATE TABLE actions_detail (id INTEGER PRIMARY KEY," + "name VARCHAR(255)," + "type VARCHAR(255)," + "hold_size INTEGER)")
     void createTableIfMissing();
 
     @Update("DROP TABLE IF EXISTS `actions_detail`")
@@ -24,6 +24,6 @@ public interface ActionsDetailRepository extends BaseRepository {
             "hold_size = #{holdSize}, " +
             "name = #{name}, " +
             "type = #{type}")
-    void insertOrUpdateItem(ActionDetail actionDetail);
+    void insertOrUpdateItem(JsonActionDetail jsonActionDetail);
 
 }

@@ -3,9 +3,8 @@ package com.example.admitad.service;
 import com.example.admitad.service.scheduler.ActualTokenKeeper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
@@ -41,13 +40,7 @@ public class ProgramJsonReceiver {
             return Optional.empty();
         }
 
-        try {
-            jsonObject = new JSONObject(jsonStr);
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-            return Optional.empty();
-        }
+        jsonObject = new JSONObject(jsonStr);
 
         return Optional.of(jsonObject);
     }

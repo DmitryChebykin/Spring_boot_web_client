@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ActionDetail {
+public class JsonActionDetail {
     @JsonProperty("tariffs")
     private List<Tariff> tariffs;
 

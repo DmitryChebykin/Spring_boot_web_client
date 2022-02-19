@@ -1,13 +1,15 @@
-package com.example.admitad.myBatisPlus.service;
+package com.example.admitad.myBatisPlus.service.singleService;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.admitad.myBatisPlus.ActionsDetailMapper;
+import com.example.admitad.myBatisPlus.domain.ActionsDetail;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.admitad.myBatisPlus.domain.ActionsDetail;
 
 @Service
+@Transactional
 public class ActionsDetailService extends ServiceImpl<ActionsDetailMapper, ActionsDetail> {
 
     
@@ -29,5 +31,9 @@ public class ActionsDetailService extends ServiceImpl<ActionsDetailMapper, Actio
     
     public int insertOrUpdateSelective(ActionsDetail record) {
         return baseMapper.insertOrUpdateSelective(record);
+    }
+
+    public int batchInsertOrUpdate(List<ActionsDetail> actionsDetailList) {
+        return baseMapper.batchInsertOrUpdate(actionsDetailList);
     }
 }

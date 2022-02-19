@@ -8,10 +8,10 @@
     <result column="image_uri" jdbcType="VARCHAR" property="imageUri" />
     <result column="image" jdbcType="BLOB" property="image" />
     <result column="products_xml_link" jdbcType="VARCHAR" property="productsXmlLink" />
-    <result column="gotoLink" jdbcType="VARCHAR" property="gotolink" />
+    <result column="goto_link" jdbcType="VARCHAR" property="gotoLink" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, image_uri, image, products_xml_link, gotoLink
+    id, `name`, image_uri, image, products_xml_link, goto_link
   </sql>
   <update id="updateBatch" parameterType="java.util.List">
     update `program`
@@ -36,9 +36,9 @@
           when id = #{item.id,jdbcType=INTEGER} then #{item.productsXmlLink,jdbcType=VARCHAR}
         </foreach>
       </trim>
-      <trim prefix="gotoLink = case" suffix="end,">
+      <trim prefix="goto_link = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.gotolink,jdbcType=VARCHAR}
+          when id = #{item.id,jdbcType=INTEGER} then #{item.gotoLink,jdbcType=VARCHAR}
         </foreach>
       </trim>
     </trim>
@@ -78,10 +78,10 @@
           </if>
         </foreach>
       </trim>
-      <trim prefix="gotoLink = case" suffix="end,">
+      <trim prefix="goto_link = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          <if test="item.gotolink != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.gotolink,jdbcType=VARCHAR}
+          <if test="item.gotoLink != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.gotoLink,jdbcType=VARCHAR}
           </if>
         </foreach>
       </trim>
@@ -93,11 +93,11 @@
   </update>
   <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
     insert into `program`
-    (`name`, image_uri, image, products_xml_link, gotoLink)
+    (`name`, image_uri, image, products_xml_link, goto_link)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.name,jdbcType=VARCHAR}, #{item.imageUri,jdbcType=VARCHAR}, #{item.image,jdbcType=BLOB}, 
-        #{item.productsXmlLink,jdbcType=VARCHAR}, #{item.gotolink,jdbcType=VARCHAR})
+        #{item.productsXmlLink,jdbcType=VARCHAR}, #{item.gotoLink,jdbcType=VARCHAR})
     </foreach>
   </insert>
   <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.example.admitad.myBatisPlus.domain.Program" useGeneratedKeys="true">
@@ -110,7 +110,7 @@
       image_uri,
       image,
       products_xml_link,
-      gotoLink,
+      goto_link,
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -121,7 +121,7 @@
       #{imageUri,jdbcType=VARCHAR},
       #{image,jdbcType=BLOB},
       #{productsXmlLink,jdbcType=VARCHAR},
-      #{gotolink,jdbcType=VARCHAR},
+      #{gotoLink,jdbcType=VARCHAR},
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -132,7 +132,7 @@
       image_uri = #{imageUri,jdbcType=VARCHAR},
       image = #{image,jdbcType=BLOB},
       products_xml_link = #{productsXmlLink,jdbcType=VARCHAR},
-      gotoLink = #{gotolink,jdbcType=VARCHAR},
+      goto_link = #{gotoLink,jdbcType=VARCHAR},
     </trim>
   </insert>
   <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.example.admitad.myBatisPlus.domain.Program" useGeneratedKeys="true">
@@ -153,8 +153,8 @@
       <if test="productsXmlLink != null">
         products_xml_link,
       </if>
-      <if test="gotolink != null">
-        gotoLink,
+      <if test="gotoLink != null">
+        goto_link,
       </if>
     </trim>
     values
@@ -174,8 +174,8 @@
       <if test="productsXmlLink != null">
         #{productsXmlLink,jdbcType=VARCHAR},
       </if>
-      <if test="gotolink != null">
-        #{gotolink,jdbcType=VARCHAR},
+      <if test="gotoLink != null">
+        #{gotoLink,jdbcType=VARCHAR},
       </if>
     </trim>
     on duplicate key update 
@@ -195,8 +195,8 @@
       <if test="productsXmlLink != null">
         products_xml_link = #{productsXmlLink,jdbcType=VARCHAR},
       </if>
-      <if test="gotolink != null">
-        gotoLink = #{gotolink,jdbcType=VARCHAR},
+      <if test="gotoLink != null">
+        goto_link = #{gotoLink,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.admitad.myBatisPlus.RateTariffLinkMapper">
+  <resultMap id="BaseResultMap" type="com.example.admitad.myBatisPlus.domain.link.RateTariffLink">
+    <!--@Table rate_tariff_Link-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rate_id" jdbcType="INTEGER" property="rateId" />
+    <result column="tariff_id" jdbcType="INTEGER" property="tariffId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, rate_id, tariff_id
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update rate_tariff_Link
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="rate_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.rateId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="tariff_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.tariffId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update rate_tariff_Link
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="rate_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.rateId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.rateId,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="tariff_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.tariffId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.tariffId,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into rate_tariff_Link
+    (rate_id, tariff_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.rateId,jdbcType=INTEGER}, #{item.tariffId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.example.admitad.myBatisPlus.domain.link.RateTariffLink" useGeneratedKeys="true">
+    insert into rate_tariff_Link
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      rate_id,
+      tariff_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{rateId,jdbcType=INTEGER},
+      #{tariffId,jdbcType=INTEGER},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      rate_id = #{rateId,jdbcType=INTEGER},
+      tariff_id = #{tariffId,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.example.admitad.myBatisPlus.domain.link.RateTariffLink" useGeneratedKeys="true">
+    insert into rate_tariff_Link
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rateId != null">
+        rate_id,
+      </if>
+      <if test="tariffId != null">
+        tariff_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rateId != null">
+        #{rateId,jdbcType=INTEGER},
+      </if>
+      <if test="tariffId != null">
+        #{tariffId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rateId != null">
+        rate_id = #{rateId,jdbcType=INTEGER},
+      </if>
+      <if test="tariffId != null">
+        tariff_id = #{tariffId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

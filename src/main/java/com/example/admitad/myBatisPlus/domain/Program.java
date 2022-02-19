@@ -34,8 +34,8 @@ public class Program {
     @TableField(value = "products_xml_link")
     private String productsXmlLink;
 
-    @TableField(value = "gotoLink")
-    private String gotolink;
+    @TableField(value = "goto_link")
+    private String gotoLink;
 
     public static final String COL_ID = "id";
 
@@ -47,5 +47,5 @@ public class Program {
 
     public static final String COL_PRODUCTS_XML_LINK = "products_xml_link";
 
-    public static final String COL_GOTOLINK = "gotoLink";
+    public static final String COL_GOTO_LINK = "goto_link";
 }

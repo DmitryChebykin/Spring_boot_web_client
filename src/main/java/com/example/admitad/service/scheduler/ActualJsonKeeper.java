@@ -5,7 +5,7 @@ import com.example.admitad.service.ProgramJsonReceiver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONObject;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class ActualJsonKeeper {
         } else {
             Optional<JSONObject> poll = circularFifoQueue.poll();
 
-            poll.ifPresent(dataService::saveJsonToDB);
+            poll.ifPresent(jsonObject -> dataService.saveJsonToDB(jsonObject));
         }
     }
 }

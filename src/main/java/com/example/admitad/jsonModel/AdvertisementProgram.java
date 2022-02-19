@@ -18,7 +18,7 @@ public class AdvertisementProgram {
     private String name;
 
     @JsonProperty("actions_detail")
-    private List<ActionDetail> actionsDetail;
+    private List<JsonActionDetail> actionsDetail;
 
     @JsonProperty("image")
     private String imageUri;

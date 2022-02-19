@@ -1,12 +1,15 @@
-package com.example.admitad.myBatisPlus.service;
+package com.example.admitad.myBatisPlus.service.singleService;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.admitad.myBatisPlus.RatesMapper;
+import com.example.admitad.myBatisPlus.domain.Rates;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.admitad.myBatisPlus.domain.Rates;
+
 @Service
+@Transactional
 public class RatesService extends ServiceImpl<RatesMapper, Rates> {
 
     
