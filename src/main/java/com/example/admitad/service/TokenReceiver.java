@@ -64,7 +64,14 @@ public class TokenReceiver {
         TokenData tokenData = TokenData.builder().build();
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);
-            tokenData = TokenData.builder().authToken((String) jsonObject.get(ACCESS_TOKEN)).refreshToken((String) jsonObject.get(REFRESH_TOKEN)).expiresIn((Integer) jsonObject.get(EXPIRES_IN)).build();
+
+            String authToken = (String) jsonObject.get(ACCESS_TOKEN);
+            log.info("Auth token: " + authToken);
+
+            String refreshToken = (String) jsonObject.get(REFRESH_TOKEN);
+            log.info("Refresh token: " + refreshToken);
+
+            tokenData = TokenData.builder().authToken(authToken).refreshToken(refreshToken).expiresIn((Integer) jsonObject.get(EXPIRES_IN)).build();
         } catch (JSONException e) {
             e.printStackTrace();
         }
