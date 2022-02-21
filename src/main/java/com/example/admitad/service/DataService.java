@@ -4,6 +4,7 @@ import com.example.admitad.jsonModel.JsonActionDetail;
 import com.example.admitad.jsonModel.AdvertisementProgram;
 import com.example.admitad.myBatisPlus.domain.ActionsDetail;
 import com.example.admitad.myBatisPlus.domain.Program;
+import com.example.admitad.myBatisPlus.domain.Tariff;
 import com.example.admitad.myBatisPlus.service.ServiceCollection;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +37,7 @@ public class DataService {
         JSONArray results = jsonObject.getJSONArray("results");
 
         List<JSONObject> jsonObjectList = StreamSupport.stream(results.spliterator(), false)
-                .map(e -> (JSONObject) e)
+                .map(JSONObject.class::cast)
                 .collect(Collectors.toList());
 
 
@@ -66,6 +67,18 @@ public class DataService {
 
 
         serviceCollection.getActionsDetailService().batchInsertOrUpdate(actionsDetailList);
+
+        List<Tariff> tariffList = jsonActionDetailList.stream()
+                .flatMap(jsonActionDetail -> jsonActionDetail.getTariffs().stream())
+                .collect(Collectors.toList())
+                .stream()
+                .map(k -> {
+                    Tariff target = new Tariff();
+                    BeanUtils.copyProperties(k, target);
+                    return target;
+                }).collect(Collectors.toList());
+
+        serviceCollection.getTariffService().saveOrUpdateBatch(tariffList);
 
 
 //        IntStream.range(0, results.length()).forEach(e -> {
