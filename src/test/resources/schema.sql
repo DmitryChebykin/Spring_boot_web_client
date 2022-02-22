@@ -24,7 +24,7 @@ create table if not exists program
     image_uri varchar(255) ,
     image blob ,
     products_xml_link varchar(255) ,
-    gotoLink varchar(255) 
+    goto_link varchar(255)
 );
 
 create table if not exists rates

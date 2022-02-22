@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ProgramMapperTest {
+class ProgramMapperTest {
     @Autowired
     private ProgramMapper programMapper;
 
@@ -44,6 +44,7 @@ public class ProgramMapperTest {
     @Test
     void whenInsertNewProgram_ThenNonZeroIntReturns() {
         Program program = Program.builder()
+                .id(1)
                 .gotoLink("test_link")
                 .image("".getBytes(StandardCharsets.UTF_8))
                 .imageUri("image_link")
@@ -58,6 +59,7 @@ public class ProgramMapperTest {
     @Test
     void whenInsertTwoProgram_ReturnCountIs_2() {
         Program program1 = Program.builder()
+                .id(1)
                 .gotoLink("test_link")
                 .image("".getBytes(StandardCharsets.UTF_8))
                 .imageUri("image_link")
@@ -67,6 +69,7 @@ public class ProgramMapperTest {
         programMapper.insert(program1);
 
         Program program2 = Program.builder()
+                .id(2)
                 .gotoLink("test_linkasdasds")
                 .image("sdsda".getBytes(StandardCharsets.UTF_8))
                 .imageUri("image_sdsdsdlink")
