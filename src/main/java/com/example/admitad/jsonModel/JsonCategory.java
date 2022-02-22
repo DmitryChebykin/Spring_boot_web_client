@@ -10,10 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Parent {
+public class JsonCategory {
     private String name;
 
     private Integer id;
 
     private String language;
+
+    private JsonParent jsonParent;
 }

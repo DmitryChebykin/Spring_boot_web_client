@@ -1,21 +1,24 @@
 package com.example.admitad.jsonModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-@Setter
+import java.util.List;
+
 @Getter
 @Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Category {
-    private String name;
+public class JsonTariff {
+    @JsonProperty("action_id")
+    private Integer actionId;
 
     private Integer id;
 
-    private String language;
+    private String name;
 
-    private Parent parent;
+    private List<JsonRate> jsonRates;
 }

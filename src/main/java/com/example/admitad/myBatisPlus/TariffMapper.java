@@ -2,9 +2,11 @@ package com.example.admitad.myBatisPlus;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.admitad.myBatisPlus.domain.Tariff;
-import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface TariffMapper extends BaseMapper<Tariff> {
@@ -14,7 +16,21 @@ public interface TariffMapper extends BaseMapper<Tariff> {
 
     int batchInsert(@Param("list") List<Tariff> list);
 
-    int insertOrUpdate(Tariff record);
+    int insertOrUpdate(Tariff tariff);
 
-    int insertOrUpdateSelective(Tariff record);
+    int insertOrUpdateSelective(Tariff tariff);
+
+    @Insert({"<script>",
+            "insert into tariff (id, name)",
+            "values",
+            "<foreach  collection='list' item='tariff' separator=','>",
+            "(#{tariff.id}, #{tariff.name})",
+            "</foreach>",
+            "on duplicate key update ",
+            "`name` = values(`name`), " +
+                    "id = values(id);",
+            "</script>"})
+    int batchInsertOrUpdate(@Param("list") List<Tariff> tariffList);
+
+
 }

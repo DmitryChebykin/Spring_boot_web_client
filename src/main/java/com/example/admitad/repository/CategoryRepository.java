@@ -1,6 +1,6 @@
 package com.example.admitad.repository;
 
-import com.example.admitad.jsonModel.Category;
+import com.example.admitad.jsonModel.JsonCategory;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
@@ -24,5 +24,5 @@ public interface CategoryRepository extends BaseRepository{
             "language = #{language}, " +
             "name = #{name}, " +
             "parent_id = #{parent.id}")
-    void insertOrUpdateItem(Category category);
+    void insertOrUpdateItem(JsonCategory jsonCategory);
 }

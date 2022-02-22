@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AdvertisementProgram {
+public class JsonAdvertisementProgram {
     private String name;
 
     @JsonProperty("actions_detail")
@@ -30,7 +30,7 @@ public class AdvertisementProgram {
     private String productXmlLink;
 
     @JsonProperty("categories")
-    private List<Category> categories;
+    private List<JsonCategory> categories;
 
     @JsonProperty("gotolink")
     private String gotoLink;

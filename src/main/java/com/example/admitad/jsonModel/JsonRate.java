@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Rate {
+public class JsonRate {
     @JsonProperty("price_s")
     private String priceS;
 

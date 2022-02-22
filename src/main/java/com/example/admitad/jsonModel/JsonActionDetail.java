@@ -15,7 +15,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JsonActionDetail {
     @JsonProperty("tariffs")
-    private List<Tariff> tariffs;
+    private List<JsonTariff> jsonTariffs;
 
     @JsonProperty("type")
     private String type;

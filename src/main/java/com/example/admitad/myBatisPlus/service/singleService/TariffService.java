@@ -23,11 +23,15 @@ public class TariffService extends ServiceImpl<TariffMapper, Tariff> {
         return baseMapper.batchInsert(list);
     }
 
-    public int insertOrUpdate(Tariff record) {
-        return baseMapper.insertOrUpdate(record);
+    public int insertOrUpdate(Tariff tariff) {
+        return baseMapper.insertOrUpdate(tariff);
     }
 
-    public int insertOrUpdateSelective(Tariff record) {
-        return baseMapper.insertOrUpdateSelective(record);
+    public int insertOrUpdateSelective(Tariff tariff) {
+        return baseMapper.insertOrUpdateSelective(tariff);
+    }
+
+    public int batchInsertOrUpdate(List<Tariff> tariffList) {
+        return baseMapper.batchInsertOrUpdate(tariffList);
     }
 }

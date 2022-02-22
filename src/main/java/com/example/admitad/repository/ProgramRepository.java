@@ -1,6 +1,6 @@
 package com.example.admitad.repository;
 
-import com.example.admitad.jsonModel.AdvertisementProgram;
+import com.example.admitad.jsonModel.JsonAdvertisementProgram;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
@@ -25,5 +25,5 @@ public interface ProgramRepository extends BaseRepository {
             "image_uri = #{imageUri}, " +
             "image = #{image}, " +
             "products_xml_link = #{productXmlLink}")
-    void insertOrUpdateItem(AdvertisementProgram advertisementProgram);
+    void insertOrUpdateItem(JsonAdvertisementProgram jsonAdvertisementProgram);
 }
