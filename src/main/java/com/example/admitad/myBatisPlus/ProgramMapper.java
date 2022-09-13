@@ -28,7 +28,7 @@ public interface ProgramMapper extends BaseMapper<Program> {
             "</foreach>",
             "on duplicate key update ",
             "`name` = values(`name`), " +
-                    "goto_link = values(gotoLink), " +
+                    "goto_link = values(goto_link), " +
                     "id = values(id), " +
                     "image_uri = values(image_uri), " +
                     "image = values(image), " +

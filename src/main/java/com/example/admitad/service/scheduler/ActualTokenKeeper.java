@@ -29,6 +29,7 @@ public class ActualTokenKeeper implements SchedulingConfigurer {
 
     @PostConstruct
     private void init() {
+        log.info(this.getClass().getName());
         tokenData = tokenReceiver.getTokenData();
     }
 
