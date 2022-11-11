@@ -3,7 +3,6 @@ package com.example.admitad.service.scheduler;
 import com.example.admitad.service.TokenReceiver;
 import com.example.admitad.tokenModel.TokenData;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -14,7 +13,6 @@ import javax.annotation.PostConstruct;
 import java.util.Calendar;
 import java.util.Date;
 
-@RequiredArgsConstructor
 @Service
 @Slf4j
 public class ActualTokenKeeper implements SchedulingConfigurer {
@@ -26,6 +24,10 @@ public class ActualTokenKeeper implements SchedulingConfigurer {
 
     @Getter
     private TokenData tokenData;
+
+    public ActualTokenKeeper(TokenReceiver tokenReceiver) {
+        this.tokenReceiver = tokenReceiver;
+    }
 
     @PostConstruct
     private void init() {
